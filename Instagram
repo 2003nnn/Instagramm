@@ -1,0 +1,51 @@
+# Клонируйте новый репозиторий на ваш компьютер
+git clone https://github.com/username/flask-login-form.git
+cd flask-login-form
+
+# Создайте новый файл с кодом
+echo "
+from flask import Flask, request, render_template_string
+
+app = Flask(__name__)
+
+# HTML форма
+form_html = '''
+<!doctype html>
+<html>
+<head>
+    <title>Login Form</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <form method="POST">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+'''
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        # Вместо сохранения выводим данные на экран
+        return f'<h2>Logged in as {username}</h2><p>Password: {password}</p>'
+    return render_template_string(form_html)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+" > app.py
+
+# Добавьте файл в git
+git add app.py
+
+# Создайте коммит
+git commit -m "Initial commit"
+
+# Отправьте коммит в удаленный репозиторий
+git push -u origin main
